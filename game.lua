@@ -15,18 +15,14 @@ local background
 local borderR
 local borderL
 local borderBottom
-local blue
-score = 0
-local blueTable = {}
 
 attack = 0
 defense = 0
-spawnTimeBlue = 5000
-
 
 ----------------------------------------------------------------------------------------------------
 
 local function onMenuBtnRelease()
+	display.remove(blues)
 	composer.removeScene("game")
 	composer.removeScene("menu")
 	composer.gotoScene("menu", "fade", 200)
@@ -35,6 +31,7 @@ local function onMenuBtnRelease()
 end
 
 local function upgradeBtnRelease()
+	display.remove(blues)
 	composer.removeScene("game")
 	composer.removeScene("upgrade")
 	composer.gotoScene("upgrade", "fade", 200)
@@ -42,27 +39,175 @@ local function upgradeBtnRelease()
 	return true
 end
 
+blue = {}
+bCounter = 1
+
+local blues = display.newGroup()
+
 local function blueBalls()
-	local blue = display.newImage("blueball.png")
-	blue.x = math.random(100, 900)
-	blue.y = -100
-	blue.width = 40
-	blue.height = 40
-	physics.addBody(blue, "dynamic", { bounce = 0.5, friction = 0.2, radius = 20})
+	blue[bCounter] = display.newImage("blueball.png")
+	blue[bCounter].x = math.random(100, 900)
+	blue[bCounter].y = -100
+	blue[bCounter].width = 40
+	blue[bCounter].height = 40
+	physics.addBody(blue[bCounter], "dynamic", { bounce = 0.5, friction = 0.2, radius = 20})
+
+	blue[bCounter].type = "blue"
+	blues:insert(blue[bCounter])
+
+	bCounter = bCounter + 1
+	numBlue = numBlue + 1
+
 	score = score + 1
 	scoreText.text = score
-	table.insert(blueTable, 1)
-end
 
-local function if10Blue()
-	local tenBalls = blueTable[10]
-	if score == 10 then
-		display.remove(tenBalls)
-		table.remove(blueTable, 10)
+	if bCounter == 11 then
+		for i = 1, blues.numChildren do
+			display.remove(blue[i])
+		end
+		bCounter = 1
+		greenBalls()
 	end
 end
 
-if10Blue()
+green = {}
+gCounter = 1
+
+local greens = display.newGroup()
+
+function greenBalls()
+	green[gCounter] = display.newImage("greenball.png")
+	green[gCounter].x = math.random(100,900)
+	green[gCounter].y = -100
+	green[gCounter].width = 50
+	green[gCounter].height = 50
+	physics.addBody(green[gCounter], "dynamic", { bounce = 0.5, friction = 0.2, radius = 25})
+
+	green[gCounter].type = "green"
+	greens:insert(green[gCounter])
+
+	gCounter = gCounter + 1
+	numGreen = numGreen + 1
+
+	if gCounter == 11 then
+		for i = 1, greens.numChildren do
+			display.remove(green[i])
+		end
+		gCounter = 1
+		yellowBalls()
+	end
+end
+
+yellow = {}
+yCounter = 1
+
+local yellows = display.newGroup()
+
+function yellowBalls()
+	yellow[yCounter] = display.newImage("yellowball.png")
+	yellow[yCounter].x = math.random(100, 900)
+	yellow[yCounter].y = -100
+	yellow[yCounter].width = 60
+	yellow[yCounter].height = 60
+	physics.addBody(yellow[yCounter], "dynamic", {bounce = 0.5, friction = 0.2, radius = 30})
+
+	yellow[yCounter].type = "yellow"
+	yellows:insert(yellow[yCounter])
+
+	yCounter = yCounter + 1
+	numYellow = numYellow + 1
+
+	if yCounter == 11 then
+		for i = 1, yellows.numChildren do
+			display.remove(yellow[i])
+		end
+		yCounter = 1
+		orangeBalls()
+	end
+end
+
+orange = {}
+oCounter = 1
+
+local oranges = display.newGroup()
+
+function orangeBalls()
+	orange[oCounter] = display.newImage("orangeball.png")
+	orange[oCounter].x = math.random(100, 900)
+	orange[oCounter].y = -100
+	orange[oCounter].width = 70
+	orange[oCounter].height = 70
+	physics.addBody(orange[oCounter], "dynamic", {bounce = 0.5, friction = 0.2, radius = 35})
+
+	orange[oCounter].type = "orange"
+	oranges:insert(orange[oCounter])
+
+	oCounter = oCounter + 1
+	numOrange = numOrange + 1
+
+	if oCounter == 11 then
+		for i = 1, oranges.numChildren do
+			display.remove(orange[i])
+		end
+		oCounter = 1
+		redBalls()
+	end
+end
+
+red = {}
+rCounter = 1
+
+local reds = display.newGroup()
+
+function redBalls()
+	red[rCounter] = display.newImage("redball.png")
+	red[rCounter].x = math.random(100, 900)
+	red[rCounter].y = -100
+	red[rCounter].width = 75
+	red[rCounter].height = 75
+	physics.addBody(red[rCounter], "dynamic", {bounce = 0.5, friction = 0.2, radius = 35})
+
+	red[rCounter].type = "red"
+	reds:insert(red[rCounter])
+
+	rCounter = rCounter + 1
+	numRed = numRed + 1
+
+	if rCounter == 11 then
+		for i = 1, reds.numChildren do
+			display.remove(red[i])
+		end
+		rCounter = 1
+		purpleBalls()
+	end
+end
+
+purple = {}
+pCounter = 1
+
+local purples = display.newGroup()
+
+function purpleBalls()
+	purple[pCounter] = display.newImage("purpleball.png")
+	purple[pCounter].x = math.random(100, 900)
+	purple[pCounter].y = -100
+	purple[pCounter].width = 80
+	purple[pCounter].height = 80
+	physics.addBody(purple[pCounter], "dynamic", {bounce = 0.5, friction = 0.2, radius = 35})
+
+	{bounce = 0.5, friction = 0.2, radius = 35}.type = "purple"
+	purples:insert(purple[pCounter])
+
+	pCounter = pCounter + 1
+	numPurple = numPurple + 1
+
+	if pCounter == 11 then
+		for i = 1, purples.numChildren do
+			display.remove(purple[i])
+		end
+		pCounter = 1
+	end
+end
 
 ----------------------------------------------------------------------------------------------------
     
